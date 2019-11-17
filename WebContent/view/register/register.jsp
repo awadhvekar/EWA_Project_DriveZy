@@ -28,6 +28,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.js"></script>
     
     <style type="text/css">
 	body
@@ -41,7 +42,7 @@
 <body>
 	<div class="sufee-login d-flex align-content-center flex-wrap">
         <div class="container">
-            <div class="login-content">
+            <div class="login-content" style="opacity: 0.8;">
                 <div class="login-logo">
                     <a style="text-decoration:none" href="index.html">
                         <!-- <img class="align-content" src="../../images/favicon.png" alt=""> -->
@@ -50,21 +51,27 @@
                     </a>
                 </div>
                 <div class="login-form">
-                	<h2>Registration Form</h2>
-                    <form>
+                	<h2>Customer Registration Form</h2>
+                    <form id="customerRegistrationForm" action="registerAction.jsp" method="POST">
                         <div class="form-group">
-                            <label>User Name</label>
-                            <input type="email" class="form-control" placeholder="User Name">
+                            <!-- <label>User Name</label> -->
+                            <input type="text" name="userName" class="form-control" placeholder="User Name" required>
                         </div>
                         <div class="form-group">
-                            <label>Email address</label>
-                            <input type="email" class="form-control" placeholder="Email">
+                            <!-- <label>Email address</label> -->
+                            <input type="text" name="userEmail" class="form-control" placeholder="Email" required>
                         </div>
                         <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" class="form-control" placeholder="Password">
+                            <!-- <label>Password</label> -->
+                            <input type="password" name="userPassword" class="form-control" placeholder="Password" required>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">Register</button>
+                        <div class="form-group">
+                            <!-- <label>Mobile</label> -->
+                            <input type="text" name="userMobile" id="userMobile" class="form-control" placeholder="Mobile" required>
+                            <input type="hidden" name="userType" class="form-control" value="Customer">
+                        </div>
+                        <!-- <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">Register</button> -->
+                        <input type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30" value="Register">
 						<div class="register-link m-t-15 text-center">
                             <p>Already have account ? <a href="../login/login.jsp"> Sign in</a></p>
                         </div>
@@ -79,4 +86,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
 <script src="../../js/main.js"></script>
+<script>
+  $(document).ready(function(){
+
+    $('#userMobile').mask("(000) 000-0000");
+  });
+</script>
 </html>

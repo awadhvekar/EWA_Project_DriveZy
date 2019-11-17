@@ -41,7 +41,7 @@
 <body>
 	<div class="sufee-login d-flex align-content-center flex-wrap">
         <div class="container">
-            <div class="login-content">
+            <div class="login-content" style="opacity: 0.8;">
 				<div class="login-logo">
                     <a style="text-decoration:none" href="index.html">
                         <!-- <img class="align-content" src="../../images/favicon.png" alt=""> -->
@@ -51,21 +51,22 @@
                 </div>
                 <div class="login-form">
                 	<h2>Login</h2>
-                    <form>
+                    <form id="userLoginForm" action="loginAaction.jsp" method="POST">
                         <div class="form-group">
-                            <label>Email address</label>
-                            <input type="email" class="form-control" placeholder="Email">
+                            <!-- <label>Email address</label> -->
+                            <input type="text" name="email" class="form-control" placeholder="Email" required>
                         </div>
                         <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" class="form-control" placeholder="Password">
+                            <!-- <label>Password</label> -->
+                            <input type="password" name="password" class="form-control" placeholder="Password" required>
                         </div>
                         <div class="form-group">
                             <label>
                                 <a href="forgotPassword.jsp">Forgotten Password?</a>
                             </label>
                         </div>
-                        <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Sign in</button>
+                        <!-- <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Sign in</button> -->
+                        <input type="submit" class="btn btn-success btn-flat m-b-30 m-t-30" value="Sign In">
                         <div class="register-link m-t-15 text-center">
                             <p>Don't have account? <a href="../register/register.jsp"> Sign Up Here</a></p>
                         </div>

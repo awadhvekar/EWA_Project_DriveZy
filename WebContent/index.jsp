@@ -54,7 +54,7 @@
     <div class="card-body">Basic card</div>
   </div>
                  -->
-                 <div class="row">
+                 <div class="row" style="padding-top:5em;">
 	                 <!--
 	                 <div class="col-sm-4">
 						<div class="card bg-success text-white">
@@ -73,33 +73,38 @@
 	                 </div>
 	                 -->
 	                 
-	                 <div class="col-4">
+	                 <div class="col-12">
 	                 	<div class="card" style="opacity: 0.6;">
 							<div class="card-body">
-								<div class="row">Want to Login?</div>
+								<div class="row">Are you a Customer?</div>
 								<div class="row">
-									<div class="col-sm-12">
+									<div class="col-sm-6">
+										<div class="card bg-warning text-white">
+											<a style="text-decoration:none; color:white;" href="view/login/login.jsp"><div class="card-body">Login as a <b>Customer</b></div></a>
+										</div>
+					                 </div>
+					                 <div class="col-sm-6">
 										<div class="card bg-success text-white">
-											<a style="text-decoration:none; color:white;" href="view/login/login.jsp"><div class="card-body">Click here to <b>Login</b></div></a>
+											<a style="text-decoration:none; color:white;" href="view/register/register.jsp"><div class="card-body">Register as a <b>Customer</b></div></a>
 										</div>
 					                 </div>
 								</div>
 							</div>
 						</div>
 	                 </div>
-	                 <div class="col-8">
+	                 <div class="col-12">
 	                 	<div class="card" style="opacity: 0.6;">
 							<div class="card-body">
-								<div class="row" >Want to Register?</div>
+								<div class="row" >Are you a Driver?</div>
 								<div class="row">
 									<div class="col-sm-6">
-										<div class="card bg-warning text-white">
-											<a style="text-decoration:none; color:white;" href="view/register/register.jsp"><div class="card-body">Register as a <b>Customer</b></div></a>
+										<div class="card bg-primary text-white">
+											<a style="text-decoration:none; color:white;" href="view/login/driverLogin.jsp"><div class="card-body">Login as a <b>Driver</b></div></a>
 										</div>
 					                 </div>
 					                 <div class="col-sm-6">
 										<div class="card bg-danger text-white">
-											<a style="text-decoration:none; color:white;" href="view/register/register.jsp"><div class="card-body">Register as a <b>Driver</b></div></a>
+											<a style="text-decoration:none; color:white;" href="view/register/driverRegister.jsp"><div class="card-body">Register as a <b>Driver</b></div></a>
 										</div>
 					                 </div>
 								</div>
