@@ -52,9 +52,15 @@
 						</div>
 						
 						<div class="form-group">
-							<label for="expecetdRideDuration">Expected Ride Time (in minutes):</label>
-							<div name="expecetdRideDuration" id="expecetdRideDuration" value="">25</div>
-							<input type="hidden" name="hiddenExpecetdRideDuration" id="hiddenExpecetdRideDuration" value="" class="form-control" value="25">
+							<label for="rideDistance">Ride Distance:</label>
+							<div name="rideDistance" id="rideDistance" value=""><%= request.getParameter("rideDistanceInMiles") %></div>
+							<input type="hidden" name="hiddenRideDistance" id="hiddenRideDistance" value="<%= request.getParameter("rideDistanceInMiles") %>" class="form-control">
+						</div>
+						
+						<div class="form-group">
+							<label for="expecetdRideDuration">Expected Ride Time:</label>
+							<div name="expecetdRideDuration" id="expecetdRideDuration" value=""><%= request.getParameter("rideExpectedDuration") %></div>
+							<input type="hidden" name="hiddenExpecetdRideDuration" id="hiddenExpecetdRideDuration" value="<%= request.getParameter("rideExpectedDuration") %>" class="form-control">
 						</div>
 						
 						<div class="form-group">

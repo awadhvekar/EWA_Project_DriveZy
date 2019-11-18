@@ -39,7 +39,8 @@
 	System.out.println("sqlRideTime: " + sqlRideTime);
 	
 	String rideCost = request.getParameter("hiddenRideCost");
-	String expextedRideDuration = request.getParameter("expecetdRideDuration");
+	String expextedRideDuration = request.getParameter("hiddenExpecetdRideDuration");
+	String rideDistance = request.getParameter("hiddenRideDistance");
 	String cardNumber = request.getParameter("cardNumber");
 	int userId = Integer.parseInt(session.getAttribute("userId").toString());
 	int driverId = 1;
@@ -62,7 +63,7 @@
 	{
 		mySqlCon = MySQLDbConnection.getConnection();
 		
-		PreparedStatement ps = mySqlCon.prepareStatement("INSERT INTO rides (userId,driverId,source,destination,rideDate,rideTime,estimatedArrivalTime,paymentAmount,paymentCardNumber) VALUES (?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement ps = mySqlCon.prepareStatement("INSERT INTO rides (userId,driverId,source,destination,rideDate,rideTime,estimatedArrivalTime,paymentAmount,paymentCardNumber,rideDistance) VALUES (?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 		
 		ps.setInt(1, userId);
 		ps.setInt(2, driverId);
@@ -73,6 +74,7 @@
 		ps.setString(7, expextedRideDuration);
 		ps.setString(8, rideCost);
 		ps.setString(9, cardNumber);
+		ps.setString(10, rideDistance);
         
         status = ps.executeUpdate();
         ResultSet rs = ps.getGeneratedKeys();
@@ -127,7 +129,7 @@ try
 {
 	mySqlCon = MySQLDbConnection.getConnection();
 	
-	PreparedStatement ps = mySqlCon.prepareStatement("SELECT r.rideId, r.userId, r.driverId,r.source, r.destination, r.rideDate, r.rideTime, r.estimatedArrivalTime AS totalDurationOfJourney, r.paymentAmount, r.paymentCardNumber,u.name AS customerName, u.email AS customerEmail, u.mobile AS customerMobile,d.driverName, d.driverEmail, d.driverMobile, d.vehicleNumber, d.vehicleModel, d.driverRating FROM rides r INNER JOIN user u ON r.userId = u.userId INNER JOIN driver d ON r.driverId = d.driverId WHERE r.rideId = ?");
+	PreparedStatement ps = mySqlCon.prepareStatement("SELECT r.rideId, r.userId, r.driverId,r.source, r.destination, r.rideDate, r.rideTime, r.estimatedArrivalTime AS totalDurationOfJourney, r.paymentAmount, r.paymentCardNumber, r.rideDistance, u.name AS customerName, u.email AS customerEmail, u.mobile AS customerMobile,d.driverName, d.driverEmail, d.driverMobile, d.vehicleNumber, d.vehicleModel, d.driverRating FROM rides r INNER JOIN user u ON r.userId = u.userId INNER JOIN driver d ON r.driverId = d.driverId WHERE r.rideId = ?");
 	
 	ps.setInt(1, lastInsertedRideId);
     
@@ -166,6 +168,12 @@ try
 							<label for="rideCost">Ride Cost:</label>
 							<div name="rideCost" id="rideCost" value="">$ <%= rs.getString("paymentAmount") %></div>
 							<input type="hidden" name="hiddenRideCost" id="hiddenRideCost" value="<%= rs.getString("paymentAmount") %>" class="form-control" >
+						</div>
+						
+						<div class="form-group">
+							<label for="rideDistance">Ride Distance:</label>
+							<div name="rideDistance" id="rideDistance" value="">$ <%= rs.getString("rideDistance") %></div>
+							<input type="hidden" name="hiddenRideDistance" id="hiddenRideDistance" value="<%= rs.getString("rideDistance") %>" class="form-control" >
 						</div>
 						
 						<div class="form-group">
