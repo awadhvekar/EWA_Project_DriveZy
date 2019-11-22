@@ -30,12 +30,16 @@
 							<label for="sourceLocation">Start Location:</label>
 							<div name="sourceLocation" id="sourceLocation" value="<%= request.getParameter("sourceLocation") %>"><%= request.getParameter("sourceLocation") %></div>
 							<input type="hidden" name="hiddenSourceLocation" id="hiddenSourceLocation" class="form-control" value="<%= request.getParameter("sourceLocation") %>">
+							<input type="hidden" name="hiddenSourceLat" id="hiddenSourceLat" class="form-control" value="<%= request.getParameter("sourceLocationLat") %>">
+							<input type="hidden" name="hiddenSourceLong" id="hiddenSourceLong" class="form-control" value="<%= request.getParameter("sourceLocationLong") %>">
 						</div>
 						
 						<div class="form-group">
 							<label for="destinationLocation">End Location:</label>
 							<div name="destinationLocation" id="destinationLocation" value="<%= request.getParameter("destinationLocation") %>"><%= request.getParameter("destinationLocation") %></div>
 							<input type="hidden" name="hiddenDestinationLocation" id="hiddenDestinationLocation" class="form-control" value="<%= request.getParameter("destinationLocation") %>">
+							<input type="hidden" name="hiddenDestinationLat" id="hiddenDestinationLat" class="form-control" value="<%= request.getParameter("destinationLocationLat") %>">
+							<input type="hidden" name="hiddenDestinationLong" id="hiddenDestinationLong" class="form-control" value="<%= request.getParameter("destinationLocationLong") %>">
 						</div>
 						
 						<div class="form-group">
@@ -47,14 +51,20 @@
 						
 						<div class="form-group">
 							<label for="rideCost">Ride Cost:</label>
-							<div name="rideCost" id="rideCost" value="">$ 22.45</div>
-							<input type="hidden" name="hiddenRideCost" id="hiddenRideCost" value="22.45" class="form-control" >
+							<div name="rideCost" id="rideCost" value="">$ <span id="rideCostFromAPI"></span></div>
+							<input type="hidden" name="hiddenRideCost" id="hiddenRideCost" value="" class="form-control" >
 						</div>
 						
 						<div class="form-group">
-							<label for="expecetdRideDuration">Expected Ride Time (in minutes):</label>
-							<div name="expecetdRideDuration" id="expecetdRideDuration" value="">25</div>
-							<input type="hidden" name="hiddenExpecetdRideDuration" id="hiddenExpecetdRideDuration" value="" class="form-control" value="25">
+							<label for="rideDistance">Ride Distance:</label>
+							<div name="rideDistance" id="rideDistance" value=""><%= request.getParameter("rideDistanceInMiles") %></div>
+							<input type="hidden" name="hiddenRideDistance" id="hiddenRideDistance" value="<%= request.getParameter("rideDistanceInMiles") %>" class="form-control">
+						</div>
+						
+						<div class="form-group">
+							<label for="expecetdRideDuration">Expected Ride Time:</label>
+							<div name="expecetdRideDuration" id="expecetdRideDuration" value=""><%= request.getParameter("rideExpectedDuration") %></div>
+							<input type="hidden" name="hiddenExpecetdRideDuration" id="hiddenExpecetdRideDuration" value="<%= request.getParameter("rideExpectedDuration") %>" class="form-control">
 						</div>
 						
 						<div class="form-group">
@@ -118,5 +128,83 @@
 	</div>
 </div>
 <!-- /.container-fluid -->
+<script type="text/javascript">
+$(document).ready(function(){
+
+	var sourceLat = $("#hiddenSourceLat").val();
+	var sourceLong = $("#hiddenSourceLong").val();
+	var destinationLat = $("#hiddenDestinationLat").val();
+	var destinationLong = $("#hiddenDestinationLong").val();
+	var rideDistance = $("#hiddenRideDistance").val();
+	var rideDistanceArr = rideDistance.split(" ");
+	rideDistance = rideDistanceArr[0];
+	var rideDateTimeStamp = $("#hiddenRideDate").val() + " "+ $("#hiddenRideTime").val();
+	alert(rideDateTimeStamp);
+	//22-Nov-2019 1:00 PM
+	//25-Nov-2019 9:00 AM
+	var dateFormattedRideTimestamp = new Date(rideDateTimeStamp);
+	//alert(dateFormattedRideTimestamp);
+	var rideYear = dateFormattedRideTimestamp.getFullYear();
+	rideYear = rideYear.toString();
+	rideYear = rideYear.replace("-", "");
+	var rideMonth = dateFormattedRideTimestamp.getMonth() + 1;
+	var rideDate = dateFormattedRideTimestamp.getDate();
+	var rideDateTimeStampForDay = rideDateTimeStamp.toString();
+	
+	
+	//var dateFormattedRideDateTimeStampForDay = new Date(rideDateTimeStampForDay);
+	//var rideDay = dateFormattedRideDateTimeStampForDay.getDay();
+	//var rideDay = dateFormattedRideTimestamp.getDay();
+	var dateStringForRideDay = rideYear +" "+ rideMonth +" "+ rideDate;
+	var dateFormattedDateStringForRideDay = new Date(dateStringForRideDay);
+	var rideDay = dateFormattedDateStringForRideDay.getDay();
+	alert(rideDay);
+	var ride24Hour = dateFormattedRideTimestamp.getHours();
+	//"Year":2019,"Month":11,"Date":18,"Day of Week":1,"Hour":18
+
+var jsonRequest = '{"passenger_count":1,"pickup_latitude":'+sourceLat+',"pickup_longitude":'+sourceLong+',"dropoff_latitude":'+destinationLat+',"dropoff_longitude":'+destinationLong+',"H_Distance":'+rideDistance+',"Year":'+rideYear+',"Month":'+rideMonth+',"Date":'+rideDate+',"Day of Week":'+rideDay+',"Hour":'+ride24Hour+'}';
+var parsedJsonRequest = JSON.parse(jsonRequest);
+alert(JSON.stringify(parsedJsonRequest));
+	$.ajax
+	({ 
+		type: "POST",
+		url:"http://localhost:5000/predict_api",
+		//contentType: "application/json",
+		//dataType: "json",
+		data: JSON.stringify(parsedJsonRequest),
+		/*
+		data: JSON.stringify({
+			'passenger_count':1,
+			'pickup_latitude':9,
+			'pickup_longitude':6,
+			'dropoff_latitude':41.8406176,
+			'dropoff_longitude':-87.6159749,
+			'H_Distance':4,
+			'Year':2019,
+			'Month':11,
+			'Date':18,
+			'Day_of_Week':1,
+			'Hour':18
+		}),
+		*/
+		success: function(response)
+		{        
+			
+			var stringifiedResponse = JSON.stringify(response);
+			stringifiedResponse = stringifiedResponse.replace("{", "");
+			stringifiedResponse = stringifiedResponse.replace("}", "");
+			stringifiedResponseArray = stringifiedResponse.split(":");
+			var fare = parseFloat(stringifiedResponseArray[1]).toFixed(2);
+			//alert(fare)
+			$("#hiddenRideCost").val(fare);
+			$("#rideCostFromAPI").text(fare);
+		},
+		error:function(error)
+		{
+			alert(error)
+		}
+	});
+});
+</script>
 	
 	<jsp:include page="../../view/common/footer.jsp"></jsp:include>
