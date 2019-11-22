@@ -43,7 +43,7 @@
         <div class="container">
             <div class="login-content">
 				<div class="login-logo">
-                    <a style="text-decoration:none" href="index.html">
+                    <a style="text-decoration:none" href="/DriveZy">
                         <!-- <img class="align-content" src="../../images/favicon.png" alt=""> -->
                         <h1><b>Drive</b>Zy</h1>
                         <h4>Always there when you need!</h4>

@@ -72,29 +72,31 @@ $(document).ready(function(){
 	$("#sourceLocation").change(function(){
 		var geocodeService = new google.maps.Geocoder();
 		//var sourceLocation = $("#sourceLocation").val();
-		geocodeService.geocode({'address': $("#sourceLocation").val()},
-	    function(results, status) {
-	        if (status === 'OK') //status == google.maps.GeocoderStatus.OKd
-			{
-				var latlongString = results[0].geometry.location.toString();
-				latlongString = latlongString.replace('(','');
-				latlongString = latlongString.replace(')','');
-				latlongString = latlongString.trim();
-				var latLong = latlongString.split(",");
-				lattitude = latLong[0];
-				longitude = latLong[1];
-	        }
-			else
-			{
-				lattitude = 0.0;
-				longitude = 0.0;
-				alert('Geocode was not successful for the following reason: ' + status);
-			}
-			//alert("Lat: " + lattitude);
-			//alert("Long: " + longitude);
-			$("#sourceLocationLat").val(lattitude);
-			$("#sourceLocationLong").val(longitude);
-	    });
+		setTimeout(function(){
+			geocodeService.geocode({'address': $("#sourceLocation").val()},
+		    function(results, status) {
+		        if (status === 'OK') //status == google.maps.GeocoderStatus.OKd
+				{
+					var latlongString = results[0].geometry.location.toString();
+					latlongString = latlongString.replace('(','');
+					latlongString = latlongString.replace(')','');
+					latlongString = latlongString.trim();
+					var latLong = latlongString.split(",");
+					lattitude = latLong[0];
+					longitude = latLong[1];
+		        }
+				else
+				{
+					lattitude = 0.0;
+					longitude = 0.0;
+					alert('Geocode was not successful for the following reason: ' + status);
+				}
+				//alert("Lat: " + lattitude);
+				//alert("Long: " + longitude);
+				$("#sourceLocationLat").val(lattitude);
+				$("#sourceLocationLong").val(longitude);
+		    });
+		}, 1000);
 		
 		if($("#sourceLocation").val() == null || $("#destinationLocation").val() == null || $("#sourceLocation").val() == "" || $("#destinationLocation").val() == "" || typeof($("#sourceLocation").val())==='undefined' || typeof($("#destinationLocation").val())==='undefined')
 		{
@@ -120,7 +122,7 @@ $(document).ready(function(){
 			        else
 			        {
 						var stringifiedJsonResponse = JSON.stringify(response);
-						alert(stringifiedJsonResponse);
+						//alert(stringifiedJsonResponse);
 						var parsedJsonResponse = response;
 						var rowsObject = parsedJsonResponse.rows;
 							
@@ -152,29 +154,31 @@ $(document).ready(function(){
 	$("#destinationLocation").change(function(){
 		var geocodeService = new google.maps.Geocoder();
 		//var sourceLocation = $("#sourceLocation").val();
-		geocodeService.geocode({'address': $("#destinationLocation").val()},
-	    function(results, status) {
-	        if (status === 'OK') //status == google.maps.GeocoderStatus.OKd
-			{
-				var latlongString = results[0].geometry.location.toString();
-				latlongString = latlongString.replace('(','');
-				latlongString = latlongString.replace(')','');
-				latlongString = latlongString.trim();
-				var latLong = latlongString.split(",");
-				lattitude = latLong[0];
-				longitude = latLong[1];
-	        }
-			else
-			{
-				lattitude = 0.0;
-				longitude = 0.0;
-				alert('Geocode was not successful for the following reason: ' + status);
-			}
-			//alert("Lat: " + lattitude);
-			//alert("Long: " + longitude);
-			$("#destinationLocationLat").val(lattitude);
-			$("#destinationLocationLong").val(longitude);
-	    });
+		setTimeout(function(){
+			geocodeService.geocode({'address': $("#destinationLocation").val()},
+		    function(results, status) {
+		        if (status === 'OK') //status == google.maps.GeocoderStatus.OKd
+				{
+					var latlongString = results[0].geometry.location.toString();
+					latlongString = latlongString.replace('(','');
+					latlongString = latlongString.replace(')','');
+					latlongString = latlongString.trim();
+					var latLong = latlongString.split(",");
+					lattitude = latLong[0];
+					longitude = latLong[1];
+		        }
+				else
+				{
+					lattitude = 0.0;
+					longitude = 0.0;
+					alert('Geocode was not successful for the following reason: ' + status);
+				}
+				//alert("Lat: " + lattitude);
+				//alert("Long: " + longitude);
+				$("#destinationLocationLat").val(lattitude);
+				$("#destinationLocationLong").val(longitude);
+		    });
+		}, 1000);
 		
 		if($("#sourceLocation").val() == null || $("#destinationLocation").val() == null || $("#sourceLocation").val() == "" || $("#destinationLocation").val() == "" || typeof($("#sourceLocation").val())==='undefined' || typeof($("#destinationLocation").val())==='undefined')
 		{
@@ -200,7 +204,7 @@ $(document).ready(function(){
 			        else
 			        {
 						var stringifiedJsonResponse = JSON.stringify(response);
-						alert(stringifiedJsonResponse);
+						//alert(stringifiedJsonResponse);
 						var parsedJsonResponse = response;
 						var rowsObject = parsedJsonResponse.rows;
 							

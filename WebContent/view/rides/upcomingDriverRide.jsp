@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.sql.*"%>
 <%@page import="com.drivezy.common.MySQLDbConnection"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -38,6 +39,8 @@ try
 	ps.setInt(1, driverId);
     
 	ResultSet rs = ps.executeQuery();
+	SimpleDateFormat simpDate = new SimpleDateFormat("MMM dd, yyyy");
+	SimpleDateFormat simpTime = new SimpleDateFormat("hh:mm a");
 	
 	if(rs.next() == false)
 	{
@@ -70,9 +73,9 @@ try
 							
 							<div class="form-group">
 								<label for="sourceLocation">Ride Date and Time:</label>
-								<div name="sourceLocation" id="sourceLocation" value="<%= rs.getString("rideDate") + " " + rs.getString("rideTime") %>"><%= rs.getString("rideDate") + " " + rs.getString("rideTime") %></div>
-								<input type="hidden" name="hiddenRideDate" id="hiddenRideDate" class="form-control" value="<%= rs.getString("rideDate") %>">
-								<input type="hidden" name="hiddenRideTime" id="hiddenRideTime" class="form-control" value="<%= rs.getString("rideTime") %>">
+								<div name="sourceLocation" id="sourceLocation" value="<%= simpDate.format(rs.getDate("rideDate")) + " " + simpTime.format(rs.getTime("rideTime")) %>"><%= simpDate.format(rs.getDate("rideDate")) + " " + simpTime.format(rs.getTime("rideTime")) %></div>
+								<input type="hidden" name="hiddenRideDate" id="hiddenRideDate" class="form-control" value="<%= simpDate.format(rs.getDate("rideDate")) %>">
+								<input type="hidden" name="hiddenRideTime" id="hiddenRideTime" class="form-control" value="<%= simpTime.format(rs.getTime("rideTime")) %>">
 							</div>
 						</div>
 						<div class="col-sm-6">
