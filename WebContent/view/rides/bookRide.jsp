@@ -44,6 +44,15 @@
 					<input type="hidden" class="form-control" id="rideExpectedDuration" name="rideExpectedDuration" value="">
 					<input type="hidden" class="form-control" id="rideExpectedDurationInTraffic" name="rideExpectedDurationInTraffic" value="">
 				</div>
+				
+				<div class="form-group">
+					<label for="rideType">Ride Type:</label>
+					<select id="rideType" name="rideType" class="form-control" required>
+						<option selected disabled hidden>Select Ride Type</option>
+						<option value="private">Private Ride</option>
+						<option value="share">Share Ride</option>
+					</select>
+				</div>
 
   				<button type="submit" class="btn btn-primary">Book Ride</button>
   				
