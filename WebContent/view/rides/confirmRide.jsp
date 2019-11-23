@@ -56,6 +56,12 @@
 						</div>
 						
 						<div class="form-group">
+							<label for="rideType">Ride Type:</label>
+							<div name="rideType" id="rideType" value="<%= request.getParameter("rideType") %>"><%= request.getParameter("rideType") %></div>
+							<input type="hidden" name="hiddenRideType" id="hiddenRideType" value="<%= request.getParameter("rideType") %>">
+						</div>
+						
+						<div class="form-group">
 							<label for="rideDistance">Ride Distance:</label>
 							<div name="rideDistance" id="rideDistance" value=""><%= request.getParameter("rideDistanceInMiles") %></div>
 							<input type="hidden" name="hiddenRideDistance" id="hiddenRideDistance" value="<%= request.getParameter("rideDistanceInMiles") %>" class="form-control">
@@ -130,7 +136,16 @@
 <!-- /.container-fluid -->
 <script type="text/javascript">
 $(document).ready(function(){
-
+	var rideType;
+	if($("#hiddenRideType").val() == "share")
+	{
+		rideType = 2;
+	}
+	else if($("#hiddenRideType").val() == "private")
+	{
+		rideType = 1;
+	}
+	//var rideType = $("#hiddenRideType").val();
 	var sourceLat = $("#hiddenSourceLat").val();
 	var sourceLong = $("#hiddenSourceLong").val();
 	var destinationLat = $("#hiddenDestinationLat").val();
@@ -139,7 +154,7 @@ $(document).ready(function(){
 	var rideDistanceArr = rideDistance.split(" ");
 	rideDistance = rideDistanceArr[0];
 	var rideDateTimeStamp = $("#hiddenRideDate").val() + " "+ $("#hiddenRideTime").val();
-	alert(rideDateTimeStamp);
+	//alert(rideDateTimeStamp);
 	//22-Nov-2019 1:00 PM
 	//25-Nov-2019 9:00 AM
 	var dateFormattedRideTimestamp = new Date(rideDateTimeStamp);
@@ -158,13 +173,14 @@ $(document).ready(function(){
 	var dateStringForRideDay = rideYear +" "+ rideMonth +" "+ rideDate;
 	var dateFormattedDateStringForRideDay = new Date(dateStringForRideDay);
 	var rideDay = dateFormattedDateStringForRideDay.getDay();
-	alert(rideDay);
+	//alert(rideDay);
 	var ride24Hour = dateFormattedRideTimestamp.getHours();
 	//"Year":2019,"Month":11,"Date":18,"Day of Week":1,"Hour":18
 
-var jsonRequest = '{"passenger_count":1,"pickup_latitude":'+sourceLat+',"pickup_longitude":'+sourceLong+',"dropoff_latitude":'+destinationLat+',"dropoff_longitude":'+destinationLong+',"H_Distance":'+rideDistance+',"Year":'+rideYear+',"Month":'+rideMonth+',"Date":'+rideDate+',"Day of Week":'+rideDay+',"Hour":'+ride24Hour+'}';
-var parsedJsonRequest = JSON.parse(jsonRequest);
-alert(JSON.stringify(parsedJsonRequest));
+	var jsonRequest = '{"passenger_count":'+rideType+',"pickup_latitude":'+sourceLat+',"pickup_longitude":'+sourceLong+',"dropoff_latitude":'+destinationLat+',"dropoff_longitude":'+destinationLong+',"H_Distance":'+rideDistance+',"Year":'+rideYear+',"Month":'+rideMonth+',"Date":'+rideDate+',"Day of Week":'+rideDay+',"Hour":'+ride24Hour+'}';
+	var parsedJsonRequest = JSON.parse(jsonRequest);
+	//alert(JSON.stringify(parsedJsonRequest));
+	
 	$.ajax
 	({ 
 		type: "POST",
@@ -189,19 +205,25 @@ alert(JSON.stringify(parsedJsonRequest));
 		*/
 		success: function(response)
 		{        
-			
 			var stringifiedResponse = JSON.stringify(response);
 			stringifiedResponse = stringifiedResponse.replace("{", "");
 			stringifiedResponse = stringifiedResponse.replace("}", "");
 			stringifiedResponseArray = stringifiedResponse.split(":");
 			var fare = parseFloat(stringifiedResponseArray[1]).toFixed(2);
-			//alert(fare)
+			//alert(fare);
 			$("#hiddenRideCost").val(fare);
 			$("#rideCostFromAPI").text(fare);
 		},
+		/*
+		complete: function(response)
+		{
+			var stringifiedResponse = JSON.stringify(response);
+			alert(stringifiedResponse);
+		},
+		*/
 		error:function(error)
 		{
-			alert(error)
+			alert(JSON.stringify(error));
 		}
 	});
 });
