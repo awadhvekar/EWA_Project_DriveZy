@@ -33,7 +33,8 @@
 			          <th>Cost</th>
 			          <th>Driver Name</th>
 			          <th>Vehicle Details</th>
-			          <th>Driver Rating</th>
+			          <!-- <th>Driver Rating</th> -->
+			          <th>Write Review</th>
 			        </tr>
 			      </thead>
 			      <tbody>
@@ -44,7 +45,7 @@
 	{
 		mySqlCon = MySQLDbConnection.getConnection();
 		
-		PreparedStatement ps = mySqlCon.prepareStatement("SELECT r.rideId, r.userId, r.driverId,r.source, r.destination, r.rideDate, r.rideTime, r.estimatedArrivalTime AS totalDurationOfJourney, r.paymentAmount, r.paymentCardNumber,u.name AS customerName, u.email AS customerEmail, u.mobile AS customerMobile,d.driverName, d.driverEmail, d.driverMobile, d.vehicleNumber, d.vehicleModel, d.driverRating FROM rides r INNER JOIN user u ON r.userId = u.userId INNER JOIN driver d ON r.driverId = d.driverId WHERE r.userId = ?");
+		PreparedStatement ps = mySqlCon.prepareStatement("SELECT r.rideId, r.userId, r.driverId,r.source, r.destination, r.rideDate, r.rideTime, r.estimatedArrivalTime AS totalDurationOfJourney, r.paymentAmount, r.paymentCardNumber,u.name AS customerName, u.email AS customerEmail, u.mobile AS customerMobile,d.driverName, d.driverEmail, d.driverMobile, d.vehicleNumber, d.vehicleModel, d.driverRating FROM rides r INNER JOIN user u ON r.userId = u.userId INNER JOIN driver d ON r.driverId = d.driverId WHERE r.userId = ? ORDER BY CONCAT(r.rideDate, ' ', r.rideTime) DESC");
 		
 		ps.setInt(1, userId);
 	    
@@ -70,7 +71,8 @@
 						<td><%=rs.getString("paymentAmount") %></td>
 						<td><%=rs.getString("driverName") %></td>
 						<td><%=rs.getString("vehicleModel") + " " + rs.getString("vehicleNumber")%></td>
-						<td><%=rs.getString("driverRating") %></td>
+						<%-- <td><%=rs.getString("driverRating") %></td> --%>
+						<td><a href="writeRideReview.jsp?rideId=<%=rs.getString("rideId") %>"><i class="fa fa-pencil"></i></a></td>
 			        </tr>
 <%
 		}

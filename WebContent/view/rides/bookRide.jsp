@@ -23,6 +23,7 @@
 					<input type="text" class="form-control" placeholder="Source" id="sourceLocation" name="sourceLocation" required>
 					<input type="hidden" class="form-control" id="sourceLocationLat" name="sourceLocationLat" value="">
 					<input type="hidden" class="form-control" id="sourceLocationLong" name="sourceLocationLong" value="">
+					<input type="hidden" class="form-control" id="sourceZipCode" name="sourceZipCode" value="">
 				</div>
 				
 				<div class="form-group">
@@ -93,6 +94,24 @@ $(document).ready(function(){
 					var latLong = latlongString.split(",");
 					lattitude = latLong[0];
 					longitude = latLong[1];
+					
+					/* Zip code extraction from Google Geocoding API */
+					var addressComponentsObject = results[0].address_components;
+					var addressComponentsArray = [];
+					for (var i = 0; i < addressComponentsObject.length; i++) {
+						//addressComponentsArray.push(JSON.stringify(jsonStringifiedAddressComponentsObject[i]));
+						var jsonStringifiedAddressComponentsObject = JSON.stringify(addressComponentsObject[i]);
+						var jsonParsedRowObject = JSON.parse(jsonStringifiedAddressComponentsObject);
+						if(jsonParsedRowObject.types == "postal_code")
+						{
+							sourceZip = jsonParsedRowObject.long_name;
+						}
+						
+					}
+					//alert(sourceZip);
+					$("#sourceZipCode").val(sourceZip);
+					/* Zip code extraction from Google Geocoding API */
+					
 		        }
 				else
 				{
