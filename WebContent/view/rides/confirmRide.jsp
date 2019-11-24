@@ -32,6 +32,7 @@
 							<input type="hidden" name="hiddenSourceLocation" id="hiddenSourceLocation" class="form-control" value="<%= request.getParameter("sourceLocation") %>">
 							<input type="hidden" name="hiddenSourceLat" id="hiddenSourceLat" class="form-control" value="<%= request.getParameter("sourceLocationLat") %>">
 							<input type="hidden" name="hiddenSourceLong" id="hiddenSourceLong" class="form-control" value="<%= request.getParameter("sourceLocationLong") %>">
+							<input type="hidden" name="hiddenSourceZipCode" id="hiddenSourceZipCode" class="form-control" value="<%= request.getParameter("sourceZipCode") %>">
 						</div>
 						
 						<div class="form-group">

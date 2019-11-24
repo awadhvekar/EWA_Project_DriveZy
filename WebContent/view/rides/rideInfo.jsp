@@ -12,6 +12,16 @@
 {
 	height: 100%;
 }
+.star-rating
+{
+  line-height:32px;
+  font-size:1.25em;
+}
+
+.star-rating .fa-star
+{
+	color: orange;
+}
 </style>
 	<jsp:include page="../../view/common/header.jsp"></jsp:include>
 		<jsp:include page="../../view/common/leftSidebar.jsp"></jsp:include>
@@ -29,11 +39,12 @@
 <%
 Connection mySqlCon = null;
 int rideId = Integer.parseInt(request.getParameter("rideId").toString());
+String rideReviewFromDb;
 try
 {
 	mySqlCon = MySQLDbConnection.getConnection();
 	
-	PreparedStatement ps = mySqlCon.prepareStatement("SELECT r.rideId, r.userId, r.driverId,r.source, r.destination, r.rideDate, r.rideTime, r.estimatedArrivalTime AS totalDurationOfJourney, r.paymentAmount, r.paymentCardNumber,u.name AS customerName, u.email AS customerEmail, u.mobile AS customerMobile,d.driverName, d.driverEmail, d.driverMobile, d.vehicleNumber, d.vehicleModel, d.driverRating FROM rides r INNER JOIN user u ON r.userId = u.userId INNER JOIN driver d ON r.driverId = d.driverId WHERE r.rideId = ?");
+	PreparedStatement ps = mySqlCon.prepareStatement("SELECT r.rideId, r.userId, r.driverId,r.source, r.destination, r.rideDate, r.rideTime, r.estimatedArrivalTime AS totalDurationOfJourney, r.paymentAmount, r.paymentCardNumber, r.rideRating, IFNULL(r.rideReview, 'No Review Present') AS rideReview, u.name AS customerName, u.email AS customerEmail, u.mobile AS customerMobile,d.driverName, d.driverEmail, d.driverMobile, d.vehicleNumber, d.vehicleModel, d.driverRating FROM rides r INNER JOIN user u ON r.userId = u.userId INNER JOIN driver d ON r.driverId = d.driverId WHERE r.rideId = ?");
 	
 	ps.setInt(1, rideId);
     
@@ -44,7 +55,7 @@ try
 		System.out.println("Invalid ride Id");
 	}
 	else
-	{	
+	{		
 %>
 			<div class="row">
 				<div class="col-sm-4">
@@ -78,6 +89,24 @@ try
 							<label for="expecetdRideDuration">Expected Ride Time (in minutes):</label>
 							<div name="expecetdRideDuration" id="expecetdRideDuration" value=""><%= rs.getString("totalDurationOfJourney") %></div>
 							<input type="hidden" name="hiddenExpecetdRideDuration" id="hiddenExpecetdRideDuration" value="<%= rs.getString("totalDurationOfJourney") %>" class="form-control">
+						</div>
+						
+						<div class="form-group">
+							<label for="expecetdRideDuration">Ride Rating:</label>
+							<div class="star-rating">
+								<span class="fa fa-star-o" data-rating="1"></span>
+								<span class="fa fa-star-o" data-rating="2"></span>
+								<span class="fa fa-star-o" data-rating="3"></span>
+								<span class="fa fa-star-o" data-rating="4"></span>
+								<span class="fa fa-star-o" data-rating="5"></span>
+								<input type="hidden" name="rideRating" id="rideRating" class="rating-value" value="<%= rs.getString("rideRating") %>" class="form-control" disabled readonly>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="expecetdRideDuration">Ride Review:</label>
+							<div name="rideReview" id="rideReview" value=""><%= rs.getString("rideReview") %></div>
+							<input type="hidden" name="hiddenRideReview" id="hiddenRideReview" value="<%= rs.getString("rideReview") %>" class="form-control">
 						</div>
 						
 						<div class="form-group">
@@ -136,6 +165,27 @@ finally
 <!-- /.container-fluid -->
 
 <script>
+/* Star Rating js code */
+var $star_rating = $('.star-rating .fa');
+
+var SetRatingStar = function() {
+  return $star_rating.each(function() {
+    if (parseInt($star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+      return $(this).removeClass('fa-star-o').addClass('fa-star');
+    } else {
+      return $(this).removeClass('fa-star').addClass('fa-star-o');
+    }
+  });
+};
+
+$star_rating.on('click', function() {
+  $star_rating.siblings('input.rating-value').val($(this).data('rating'));
+  return SetRatingStar();
+});
+
+SetRatingStar();
+/* Star Rating js code */
+
       function initMap() {
         var directionsService = new google.maps.DirectionsService();
         var directionsRenderer = new google.maps.DirectionsRenderer();

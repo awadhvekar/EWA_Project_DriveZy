@@ -44,7 +44,7 @@
 	{
 		mySqlCon = MySQLDbConnection.getConnection();
 		
-		PreparedStatement ps = mySqlCon.prepareStatement("SELECT r.rideId, r.userId, r.driverId,r.source, r.destination, r.rideDate, r.rideTime, r.estimatedArrivalTime AS totalDurationOfJourney, r.paymentAmount, r.paymentCardNumber,u.name AS customerName, u.email AS customerEmail, u.mobile AS customerMobile,d.driverName, d.driverEmail, d.driverMobile, d.vehicleNumber, d.vehicleModel, d.driverRating FROM rides r INNER JOIN user u ON r.userId = u.userId INNER JOIN driver d ON r.driverId = d.driverId");
+		PreparedStatement ps = mySqlCon.prepareStatement("SELECT r.rideId, r.userId, r.driverId,r.source, r.destination, r.rideDate, r.rideTime, r.estimatedArrivalTime AS totalDurationOfJourney, r.paymentAmount, r.paymentCardNumber,r.rideRating, r.rideReview, u.name AS customerName, u.email AS customerEmail, u.mobile AS customerMobile,d.driverName, d.driverEmail, d.driverMobile, d.vehicleNumber, d.vehicleModel, d.driverRating FROM rides r INNER JOIN user u ON r.userId = u.userId INNER JOIN driver d ON r.driverId = d.driverId ORDER BY CONCAT(r.rideDate, ' ', r.rideTime) DESC");
 	    
 		ResultSet rs = ps.executeQuery();
 		SimpleDateFormat simpDate = new SimpleDateFormat("MMM dd, yyyy");
@@ -70,6 +70,20 @@
 						<td><%=rs.getString("vehicleModel") + " " + rs.getString("vehicleNumber")%></td>
 						<td><%=rs.getString("driverRating") %></td>
 						<td><a href="rideInfo.jsp?rideId=<%=rs.getString("rideId") %>"><i class="fa fa-eye"></i></a></td>
+						<%-- <%
+						if(rs.getString("rideRating").equalsIgnoreCase(null) || rs.getString("rideReview").equalsIgnoreCase(null))
+						{
+						%>
+							<td><a href="rideInfo.jsp?rideId=<%=rs.getString("rideId") %>" disabled readonly><i class="fa fa-eye"></i></a></td>
+						<%
+						}
+						else
+						{
+						%>
+							<td><a href="rideInfo.jsp?rideId=<%=rs.getString("rideId") %>"><i class="fa fa-eye"></i></a></td>
+						<%
+						}
+						%> --%>
 			        </tr>
 <%
 		}

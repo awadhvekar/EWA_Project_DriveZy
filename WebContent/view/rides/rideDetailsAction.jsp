@@ -24,6 +24,7 @@
 <%
 	//response.sendRedirect("../../view/login/login.jsp");
 	String sourceLocation = request.getParameter("hiddenSourceLocation");
+	String sourceZipcode = request.getParameter("hiddenSourceZipCode");
 	String destinationLocation = request.getParameter("hiddenDestinationLocation");
 	
 	String rideDate = request.getParameter("hiddenRideDate");
@@ -67,7 +68,7 @@
 	{
 		mySqlCon = MySQLDbConnection.getConnection();
 		
-		PreparedStatement ps = mySqlCon.prepareStatement("INSERT INTO rides (userId,driverId,source,destination,rideDate,rideTime,estimatedArrivalTime,paymentAmount,paymentCardNumber,rideDistance) VALUES (?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement ps = mySqlCon.prepareStatement("INSERT INTO rides (userId,driverId,source,destination,rideDate,rideTime,estimatedArrivalTime,paymentAmount,paymentCardNumber,rideDistance,sourceZipcode) VALUES (?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 		
 		ps.setInt(1, userId);
 		ps.setInt(2, driverId);
@@ -79,6 +80,7 @@
 		ps.setString(8, rideCost);
 		ps.setString(9, cardNumber);
 		ps.setString(10, rideDistance);
+		ps.setString(11, sourceZipcode);
         
         status = ps.executeUpdate();
         ResultSet rs = ps.getGeneratedKeys();
