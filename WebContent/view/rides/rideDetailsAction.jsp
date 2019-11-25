@@ -43,6 +43,7 @@
 	String expextedRideDuration = request.getParameter("hiddenExpecetdRideDuration");
 	String rideDistance = request.getParameter("hiddenRideDistance");
 	String cardNumber = request.getParameter("cardNumber");
+	String rideType= request.getParameter("hiddenRideType");
 	int userId = Integer.parseInt(session.getAttribute("userId").toString());
 	double randomDouble = Math.random();
 	randomDouble = randomDouble * 2 + 1;
@@ -68,7 +69,7 @@
 	{
 		mySqlCon = MySQLDbConnection.getConnection();
 		
-		PreparedStatement ps = mySqlCon.prepareStatement("INSERT INTO rides (userId,driverId,source,destination,rideDate,rideTime,estimatedArrivalTime,paymentAmount,paymentCardNumber,rideDistance,sourceZipcode) VALUES (?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement ps = mySqlCon.prepareStatement("INSERT INTO rides (userId,driverId,source,destination,rideDate,rideTime,estimatedArrivalTime,paymentAmount,paymentCardNumber,rideDistance,sourceZipcode,rideType) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 		
 		ps.setInt(1, userId);
 		ps.setInt(2, driverId);
@@ -81,6 +82,7 @@
 		ps.setString(9, cardNumber);
 		ps.setString(10, rideDistance);
 		ps.setString(11, sourceZipcode);
+		ps.setString(12, rideType);
         
         status = ps.executeUpdate();
         ResultSet rs = ps.getGeneratedKeys();

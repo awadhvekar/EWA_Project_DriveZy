@@ -130,7 +130,7 @@ try
 		}
 	}
 						%>
-							<label>Part 1</label>
+							<label>Number of rides as per Source Location zipcode</label>
 							<div id="piechart_3d"></div> <!-- style="width: 900px; height: 500px;" -->
 						</div>
 					</div>
@@ -221,7 +221,7 @@ try
 		}
 	}
 %>
-							<label>Part 2</label>
+							<label>Number of Rides on particular date</label>
 							<div id="curve_chart"></div> <!-- style="width: 900px; height: 500px" -->
 						</div>
 					</div>
@@ -315,7 +315,7 @@ try
 		}
 	}
 %>
-							<label>Part 3</label>
+							<label>Number of rides according to Rating</label>
 							<div id="top_x_div"></div> <!-- style="width: 800px; height: 600px;" -->
 						</div>
 					</div>

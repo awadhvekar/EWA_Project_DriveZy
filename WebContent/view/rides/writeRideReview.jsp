@@ -44,7 +44,7 @@ try
 {
 	mySqlCon = MySQLDbConnection.getConnection();
 	
-	PreparedStatement ps = mySqlCon.prepareStatement("SELECT r.rideId, r.userId, r.driverId,r.source, r.destination, r.rideDate, r.rideTime, r.estimatedArrivalTime AS totalDurationOfJourney, r.paymentAmount, r.paymentCardNumber,u.name AS customerName, u.email AS customerEmail, u.mobile AS customerMobile,d.driverName, d.driverEmail, d.driverMobile, d.vehicleNumber, d.vehicleModel, d.driverRating FROM rides r INNER JOIN user u ON r.userId = u.userId INNER JOIN driver d ON r.driverId = d.driverId WHERE r.rideId = ?");
+	PreparedStatement ps = mySqlCon.prepareStatement("SELECT r.rideId, r.userId, r.driverId,r.source, r.destination, r.rideDate, r.rideTime, r.estimatedArrivalTime AS totalDurationOfJourney, r.paymentAmount, r.paymentCardNumber, r.rideType, u.name AS customerName, u.email AS customerEmail, u.mobile AS customerMobile,d.driverName, d.driverEmail, d.driverMobile, d.vehicleNumber, d.vehicleModel, d.driverRating FROM rides r INNER JOIN user u ON r.userId = u.userId INNER JOIN driver d ON r.driverId = d.driverId WHERE r.rideId = ?");
 	
 	ps.setInt(1, rideId);
     
@@ -126,6 +126,12 @@ try
 						<label for="expecetdRideDuration">Expected Ride Time (in minutes):</label>
 						<div name="expecetdRideDuration" id="expecetdRideDuration" value=""><%= rs.getString("totalDurationOfJourney") %></div>
 						<input type="hidden" name="hiddenExpecetdRideDuration" id="hiddenExpecetdRideDuration" value="<%= rs.getString("totalDurationOfJourney") %>" class="form-control">
+					</div>
+					
+					<div class="form-group">
+						<label for="expecetdRideType">Ride Type:</label>
+						<div name="expecetdRideType" id="expecetdRideType" value=""><%= rs.getString("rideType") %></div>
+						<input type="hidden" name="hiddenRideType" id="hiddenRideType" value="<%= rs.getString("rideType") %>" class="form-control">
 					</div>
 				</div>
 				<div class="col-sm-4">

@@ -33,7 +33,7 @@ try
 {
 	mySqlCon = MySQLDbConnection.getConnection();
 	
-	PreparedStatement ps = mySqlCon.prepareStatement("SELECT r.rideId, r.userId, r.driverId,r.source, r.destination, r.rideDate, r.rideTime, r.estimatedArrivalTime AS totalDurationOfJourney, r.paymentAmount, r.paymentCardNumber,u.name AS customerName, u.email AS customerEmail, u.mobile AS customerMobile,d.driverName, d.driverEmail, d.driverMobile, d.vehicleNumber, d.vehicleModel, d.driverRating FROM rides r INNER JOIN user u ON r.userId = u.userId INNER JOIN driver d ON r.driverId = d.driverId WHERE r.rideId = ?");
+	PreparedStatement ps = mySqlCon.prepareStatement("SELECT r.rideId, r.userId, r.driverId,r.source, r.destination, r.rideDate, r.rideTime, r.estimatedArrivalTime AS totalDurationOfJourney, r.paymentAmount, r.paymentCardNumber, r.rideType, u.name AS customerName, u.email AS customerEmail, u.mobile AS customerMobile,d.driverName, d.driverEmail, d.driverMobile, d.vehicleNumber, d.vehicleModel, d.driverRating FROM rides r INNER JOIN user u ON r.userId = u.userId INNER JOIN driver d ON r.driverId = d.driverId WHERE r.rideId = ?");
 	
 	ps.setInt(1, rideId);
     
@@ -94,6 +94,12 @@ try
 								<div name="customerName" id="customerName" value="">Name-<%= rs.getString("customerName") %></div>
 								<div name="customerEmail" id="customerEmail" value="">Email-<%= rs.getString("customerEmail") %></div>
 								<div name="customerMobile" id="customerMobile" value="">Mobile-<%= rs.getString("customerMobile") %></div>
+							</div>
+							
+							<div class="form-group">
+								<label for="expecetdRideType">Ride Type:</label>
+								<div name="expecetdRideType" id="expecetdRideType" value=""><%= rs.getString("rideType") %></div>
+								<input type="hidden" name="hiddenRideType" id="hiddenRideType" value="<%= rs.getString("rideType") %>" class="form-control">
 							</div>
 							<!-- </form> -->
 						</div>
